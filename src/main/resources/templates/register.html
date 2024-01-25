@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device.width, initial-scale=1">
+    <title>REGISTER</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>Register</h1>
+    <hr/>
+    <form action="#"
+          th:action="@{/register}"
+          th:object="${blogUser}"
+          method="post">
+        <div class="input">
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" placeholder="Name">
+        </div>
+        <div class="input">
+            <label for="email">Email</label>
+            <input id="email" type="email" th:field="*{email}" placeholder="Email">
+        </div>
+        <div class="input">
+            <label for="password">Password</label>
+            <input id="password" type="password" th:field="*{password}" placeholder="*******">
+        </div>
+        <button type="submit">REGISTER</button>
+    </form>
+</div>
+</body>
+
+</html>

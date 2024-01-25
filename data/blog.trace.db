@@ -1,0 +1,15 @@
+2024-01-24 15:32:52.259730+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]blogUser cascade "; expected "identifier"; SQL statement:
+drop table if exists blogUser cascade  [42001-224]
+2024-01-24 15:32:52.273316+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]blogUser (id bigint not null, email varchar(255), name varchar(255), password varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table blogUser (id bigint not null, email varchar(255), name varchar(255), password varchar(255), primary key (id)) [42001-224]
+2024-01-24 15:32:52.280769+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists post add constraint FK72mt33dhhs48hf9gcqrq4fxte foreign key (user_id) references [*]blogUser"; expected "identifier"; SQL statement:
+alter table if exists post add constraint FK72mt33dhhs48hf9gcqrq4fxte foreign key (user_id) references blogUser [42001-224]
+2024-01-24 15:32:53.342148+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "insert into [*]blogUser (email,name,password,id) values (?,?,?,?)"; expected "identifier"; SQL statement:
+insert into blogUser (email,name,password,id) values (?,?,?,?) [42001-224]
+2024-01-24 15:32:53.372108+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]blogUser cascade "; expected "identifier"; SQL statement:
+drop table if exists blogUser cascade  [42001-224]
