@@ -4,7 +4,7 @@ import com.example.springblog.models.BlogUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -15,25 +15,26 @@ import java.util.stream.Collectors;
 
 @Component("userDetailsService")
 public class BlogUserDetails implements UserDetailsService {
-
     @Autowired
     private BlogUserService blogUserService;
+
     @Override
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<BlogUser> optionalBlogUser = blogUserService.findByEmail(email);
+
         if(!optionalBlogUser.isPresent()) {
-            throw new UsernameNotFoundException("USER DOES NOT EXIST");
+            throw new  UsernameNotFoundException("USER NOT FOUND");
         }
 
         BlogUser blogUser = optionalBlogUser.get();
 
-        List<GrantedAuthority> grantedAuthorities = blogUser
+        List<GrantedAuthority> grantedAuth = blogUser
                 .getAuthorities()
                 .stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthName()))
                 .collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(blogUser.getEmail(), blogUser.getPassword(), grantedAuthorities);
-    }
+        return new org.springframework.security.core.userdetails.User(blogUser.getEmail(), blogUser.getPassword(), grantedAuth);
 
+    }
 }

@@ -29,4 +29,12 @@ public class PostService {
         }
         return postRepo.save(post);
     }
+
+    public void delete(Post post) { postRepo.delete(post);}
+
+    public List<Post> search(String query) {
+        return postRepo.findByTitleContainingOrBodyContaining(query, query);
+    }
+
+
 }

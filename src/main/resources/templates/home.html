@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -12,11 +13,26 @@
  <div class="container">
      <h1>My Blog</h1>
      <hr/>
-     <ul>
+     <ul sec:authorize="!isAuthenticated()">
          <li><a th:href="@{/register}">Register</a></li>
          <li><a th:href="@{/login}">Login</a></li>
+     </ul>
+     <ul sec:authorize="isAuthenticated()">
+         <form th:action="@{/logout}"
+         method="post">
+             <div>
+                 <label>Hi, <span sec:authentication="name">Username</span></label>
+             </div>
+             <button type="submit">LOGOUT</button>
+         </form>
          <li><a th:href="@{/posts/create}">Create Post</a></li>
      </ul>
+
+     <form th:action="@{/search}" method="get">
+         <label for="query">Search:</label>
+         <input type="text" id="query" name="query" th:value="${query}" />
+         <button type="submit">Search</button>
+     </form>
      <div class="posts-container">
          <div class="post" th:each="post : ${posts}">
              <h2><a th:href="@{'/posts/' + ${post.id}}"

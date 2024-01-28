@@ -4,25 +4,26 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Authority {
+public class Authority implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-
+    @Column(length = 16 )
     private String authName;
 
-
+@Override
+    public String toString() {
+    return "Auth{" +
+            "name= '" + authName + "'" +
+            "}";
+}
 
 
 }

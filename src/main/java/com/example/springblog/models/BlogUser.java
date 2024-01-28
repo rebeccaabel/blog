@@ -28,19 +28,13 @@ public class BlogUser {
     @OneToMany(mappedBy="blogUser")
     private List<Post> posts;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinTable(name = "bloguser_authority",
-    joinColumns = {@JoinColumn(name = "bloguser_id", referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "authName")})
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_auth",
+    joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+    inverseJoinColumns = {@JoinColumn(name = "auth_name", referencedColumnName = "authName")})
     private Set<Authority> authorities = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return "BlogUser{" +
-                ", name='" + name + "'" +
-                ", email='" + email + "'" +
-                ", authority='" + authorities + "'" +
-                "}";
-    }
+
+
 
 }

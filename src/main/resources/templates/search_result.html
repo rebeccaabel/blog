@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEARCH RESULTS</title>
+</head>
+<body>
+<h1>SEARCH RESULTS</h1>
+
+<p th:if="${query}">Search results for: <strong th:text="${query}"></strong></p>
+
+<ul>
+    <li th:each="post : ${searchResults}">
+        <h2><a th:href="@{'/posts/' + ${post.id}}"
+               th:text="${post.title}">Title</a>
+    </h2>
+        <p th:text="${post.body}">brödtext</p>
+        <h5 th:text="'Written by ' + ${post.blogUser.name}"> Users Name</h5>
+        <h5 th:text="'Published on ' + ${post.createdAt}">Created at</h5>
+    </li>
+</ul>
+</body>
+</html>
