@@ -6,6 +6,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,11 +22,16 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/", "/register", "/search", "/login").permitAll()
                 .requestMatchers("/h2/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/posts/*").permitAll()
@@ -34,21 +41,19 @@ public class SecurityConfig {
         httpSecurity.headers().frameOptions().disable();
 
 
-        httpSecurity
-                .formLogin()
+                httpSecurity.formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .and()
-                .httpBasic();
+        )
+                        .sessionManagement()
+                        .maximumSessions(1)
+                        .expiredUrl("/login?expired")
+                        .sessionRegistry(sessionRegistry());
 
         return httpSecurity.build();
     }
